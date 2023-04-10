@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express"
 import { Anime, AnimeEntity } from "../protocols/anime.js"
 import { createAnime,
-         findAnimes } from "../services/animeService.js"
+         findAnimes,
+         deleteAnime } from "../services/animeService.js"
 
 
 const create = async (req: Request, res: Response, next:NextFunction) =>{
@@ -24,7 +25,19 @@ const findAll = async (_req: Request, res:Response, next:NextFunction)=>{
     } 
  };
 
+
+ const deleteAnimeId = async (req: Request, res:Response, next:NextFunction)=>{
+    const {id} = req.params;
+    try {
+        await deleteAnime(Number(id));
+        res.status(200).send({"message": "Anime entry deleted!."});
+    } catch (error) {
+        next(error);
+    }
+};
+
 export {
     create,
-    findAll
+    findAll,
+    deleteAnimeId
 }

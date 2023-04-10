@@ -22,8 +22,23 @@ async function findAllAnime(): Promise<QueryResult<AnimeEntity>> {
     
 }
 
+const findAnimeById = async (id:number) =>{
+    const result = await connection.query(`
+    SELECT * FROM animes WHERE id = $1; 
+    `,[id])
+    return result;
+};
+
+const deleteAnimeById = async (id:number) =>{
+    await connection.query(`
+    DELETE FROM animes WHERE id = $1
+    `,[id])
+};
+
 export {
     insertAnime,
     findAnimeTitle,
-    findAllAnime
+    findAllAnime,
+    findAnimeById,
+    deleteAnimeById,
 }

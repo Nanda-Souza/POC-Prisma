@@ -2,7 +2,9 @@ import errors from "../errors/index.js";
 import { Anime, AnimeEntity } from "../protocols/anime.js";
 import { insertAnime,
          findAnimeTitle,
-         findAllAnime } from "../repositories/animeRepository.js";
+         findAllAnime,
+         findAnimeById,
+         deleteAnimeById } from "../repositories/animeRepository.js";
 
 async function createAnime(anime:Anime) {    
     const { rowCount } = await findAnimeTitle(anime.title);    
@@ -12,12 +14,20 @@ async function createAnime(anime:Anime) {
 }
 
 async function findAnimes(): Promise<AnimeEntity[]> {
-    const { rows} = await findAllAnime();    
-    console.log(rows)
+    const { rows} = await findAllAnime();        
     return rows;    
 }
 
+const deleteAnime = async (id:number): Promise<void> =>{
+    const {rowCount} = await findAnimeById(id);
+    if(rowCount === 0) throw errors.notFoundError();
+
+    await deleteAnimeById(id);
+};
+
 export {
     createAnime,
-    findAnimes,
+    findAnimes,    
+    deleteAnime,
+
 }
