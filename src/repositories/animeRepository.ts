@@ -35,10 +35,18 @@ const deleteAnimeById = async (id:number) =>{
     `,[id])
 };
 
+async function updateAnimeById(id: number, anime: Anime): Promise<QueryResult<AnimeEntity>> {
+    return connection.query(`
+        UPDATE animes SET title = $1, episodes = $2, seasons = $3, description = $4, score = $5 WHERE id = $6
+    `,  [anime.title, anime.episodes, anime.seasons, anime.description, anime.score, id]);
+    
+}
+
 export {
     insertAnime,
     findAnimeTitle,
     findAllAnime,
     findAnimeById,
     deleteAnimeById,
+    updateAnimeById,
 }

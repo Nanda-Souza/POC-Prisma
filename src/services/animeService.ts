@@ -4,7 +4,8 @@ import { insertAnime,
          findAnimeTitle,
          findAllAnime,
          findAnimeById,
-         deleteAnimeById } from "../repositories/animeRepository.js";
+         deleteAnimeById,
+         updateAnimeById } from "../repositories/animeRepository.js";
 
 async function createAnime(anime:Anime) {    
     const { rowCount } = await findAnimeTitle(anime.title);    
@@ -18,16 +19,24 @@ async function findAnimes(): Promise<AnimeEntity[]> {
     return rows;    
 }
 
-const deleteAnime = async (id:number): Promise<void> =>{
+async function deleteAnime(id:number): Promise<void>{
     const {rowCount} = await findAnimeById(id);
     if(rowCount === 0) throw errors.notFoundError();
 
     await deleteAnimeById(id);
 };
 
+async function updateAnime (id:number, anime: Anime): Promise<void>{
+    const {rowCount} = await findAnimeById(id)
+    if(rowCount === 0) throw errors.notFoundError();
+
+    await updateAnimeById(id, anime)
+};
+
 export {
     createAnime,
     findAnimes,    
     deleteAnime,
+    updateAnime,
 
 }
