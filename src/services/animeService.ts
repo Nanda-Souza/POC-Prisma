@@ -1,7 +1,8 @@
 import errors from "../errors/index.js";
-import { Anime } from "../protocols/anime.js";
+import { Anime, AnimeEntity } from "../protocols/anime.js";
 import { insertAnime,
-         findAnimeTitle } from "../repositories/animeRepository.js";
+         findAnimeTitle,
+         findAllAnime } from "../repositories/animeRepository.js";
 
 async function createAnime(anime:Anime) {    
     const { rowCount } = await findAnimeTitle(anime.title);    
@@ -10,6 +11,13 @@ async function createAnime(anime:Anime) {
     
 }
 
+async function findAnimes(): Promise<AnimeEntity[]> {
+    const { rows} = await findAllAnime();    
+    console.log(rows)
+    return rows;    
+}
+
 export {
-    createAnime
+    createAnime,
+    findAnimes,
 }

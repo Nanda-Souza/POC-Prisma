@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express"
-import { Anime } from "../protocols/anime.js"
-import { createAnime } from "../services/animeService.js"
+import { Anime, AnimeEntity } from "../protocols/anime.js"
+import { createAnime,
+         findAnimes } from "../services/animeService.js"
 
 
 const create = async (req: Request, res: Response, next:NextFunction) =>{
@@ -14,6 +15,16 @@ const create = async (req: Request, res: Response, next:NextFunction) =>{
   
 }
 
+const findAll = async (_req: Request, res:Response, next:NextFunction)=>{
+    try {        
+     const animes = await findAnimes();     
+     res.status(200).send(animes);
+    } catch (error) {
+     next(error);
+    } 
+ };
+
 export {
-    create
+    create,
+    findAll
 }

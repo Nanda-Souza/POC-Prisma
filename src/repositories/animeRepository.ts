@@ -2,8 +2,7 @@ import { QueryResult } from "pg";
 import { Anime, AnimeEntity } from "../protocols/anime.js";
 import { connection } from "../config/database.js";
 
-async function insertAnime(anime: Anime): Promise<QueryResult<AnimeEntity>> {
-    console.log("insert anime")
+async function insertAnime(anime: Anime): Promise<QueryResult<AnimeEntity>> {    
     return connection.query(`
         INSERT INTO animes (title, episodes, seasons, description, score) VALUES ($1, $2, $3, $4, $5)
     `,  [anime.title, anime.episodes, anime.seasons, anime.description, anime.score]);
@@ -18,7 +17,13 @@ async function findAnimeTitle (title:string){
     );
 }
 
+async function findAllAnime(): Promise<QueryResult<AnimeEntity>> {
+    return connection.query("SELECT * FROM animes;");
+    
+}
+
 export {
     insertAnime,
-    findAnimeTitle
+    findAnimeTitle,
+    findAllAnime
 }
