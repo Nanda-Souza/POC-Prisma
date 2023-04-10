@@ -1,3 +1,5 @@
+import { ApplicationError } from "../protocols/protocols";
+
 function conflictError(message) {
   return {
     name: "ConflictError",
@@ -20,8 +22,21 @@ function notFoundError() {
   };
 }
 
+function invalidDataError(details: string[]): ApplicationInvalidateDataError {
+  return {
+    name: 'InvalidDataError',
+    message: 'Invalid data',
+    details,
+  };
+}
+
+type ApplicationInvalidateDataError = ApplicationError & {
+  details: string[];
+};
+
 export default {
   conflictError,
   duplicatedAnimeError,  
-  notFoundError,  
+  notFoundError,
+  invalidDataError,  
 };
