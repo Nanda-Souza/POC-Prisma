@@ -11,10 +11,7 @@ export function validateSchema(schema: ObjectSchema<Anime>) {
     
     if (!error) {
       next();
-    }else{
-      //const errors = error.details.map((detail) => detail.message);
-      //throw err.conflictError(errors);
-      //return res.status(400).json({ error: error.details.message });
+    }else{      
       res.status(httpStatus.BAD_REQUEST).send(err.invalidDataError(error.details.map((d) => d.message)));
     }
 

@@ -7,11 +7,11 @@ function conflictError(message) {
   };
 }
 
-function duplicatedAnimeError(anime) {
+function duplicatedAnimeError(animeTittle: string): ApplicationAnimeNameError {  
   return {
     name: "DuplicatedAnimeError",
-    message: "There is already an anime with given name",
-    anime,
+    message: "There is already an anime with given title",
+    animeTittle,
   };
 }
 
@@ -33,6 +33,9 @@ function invalidDataError(details: string[]): ApplicationInvalidateDataError {
 type ApplicationInvalidateDataError = ApplicationError & {
   details: string[];
 };
+
+type ApplicationAnimeNameError = ApplicationError & { 
+  animeTittle: string };
 
 export default {
   conflictError,

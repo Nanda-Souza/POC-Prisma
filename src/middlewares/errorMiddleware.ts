@@ -4,9 +4,8 @@ export function handleApplicationErrors(err, req, res, next) {
   if (err.name === "ConflictError" || err.name === "DuplicatedAnimeError") {
     return res
       .status(httpStatus.CONFLICT)
-      .send({ message: err.message, anime: err.anime });
-  }
-  
+      .send({ message: err.message, anime: err.animeTittle });
+  }  
 
   if (err.name === "NotFoundError") {
     return res.status(httpStatus.NOT_FOUND).send({
